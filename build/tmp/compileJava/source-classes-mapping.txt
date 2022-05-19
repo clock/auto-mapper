@@ -1,6 +1,8 @@
-Main.java
- Main
-MappingsDownloader.java
- MappingsDownloader
 util/FileUtil.java
  util.FileUtil
+MappingsDownloader.java
+ MappingsDownloader
+Main.java
+ Main
+ClassDumper.java
+ ClassDumper

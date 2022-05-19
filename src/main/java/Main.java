@@ -3,9 +3,17 @@ import java.util.jar.JarFile;
 import util.FileUtil;
 
 public class Main {
+
+    public static String lunar_version_string;
+    public static String version = "1.8.9";
+    public static File mappingsFolder;
+    public static File outputFolder;
+    public static File inputFolder;
+    public static File lunarprodFile;
+    public static File outputFile;
+    public static File errorsFile;
+
     public static void main(String[] args) {
-        String version = "1.8.9";
-        String lunar_version_string;
 
         if (version.contains("1.8.9")) {
             lunar_version_string = "v1_8";
@@ -20,19 +28,19 @@ public class Main {
 
         // check if mappings folder exists in the root of the project
         // if not, create it
-        File mappingsFolder = new File("mappings/" + version);
+        mappingsFolder = new File("mappings/" + version);
         if (!mappingsFolder.exists()) {
             System.out.println("making mappings folder");
             mappingsFolder.mkdirs();
         }
 
-        File outputFolder = new File("output/" + version);
+        outputFolder = new File("output/" + version);
         if (!outputFolder.exists()) {
             System.out.println("making output folder");
             outputFolder.mkdirs();
         }
 
-        File inputFolder = new File("input/" + version);
+        inputFolder = new File("input/" + version);
         if (!inputFolder.exists()) {
             System.out.println("making input folder");
             inputFolder.mkdirs();
@@ -40,7 +48,7 @@ public class Main {
 
         // check if "lunar-prod" file exists in the input folder
         // if not tell the user to put it there and exit
-        File lunarprodFile = new File("input/" + version + "/lunar-prod");
+        lunarprodFile = new File("input/" + version + "/lunar-prod");
         if (!lunarprodFile.exists()) {
             System.out.println("input file not found");
             System.out.println("please put the file lunar-prod in the input folder");
@@ -63,7 +71,7 @@ public class Main {
         MappingsDownloader.download(version, mappingsFolder);
 
         // make output.txt file in output folder
-        File outputFile = new File("output/" + version + "/output.txt");
+        outputFile = new File("output/" + version + "/output.txt");
         if (outputFile.exists()) {
             System.out.println("clearing output.txt");
             outputFile.delete();
@@ -84,7 +92,7 @@ public class Main {
         }
 
         // make errors.txt file in output folder
-        File errorsFile = new File("output/" + version + "/errors.txt");
+        errorsFile = new File("output/" + version + "/errors.txt");
         if (errorsFile.exists()) {
             System.out.println("clearing errors.txt");
             errorsFile.delete();
@@ -104,86 +112,8 @@ public class Main {
             }
         }
 
-        try {
-            FileUtil.walk(new File("./input"), "").forEach(lunarFile -> {
+        ClassDumper.dumpClasses();
 
-                // print out the file name
-                System.out.println("found: " + lunarFile.getName());
-
-                if (lunarFile.getName().equals("lunar-prod")) {
-                    try {
-                        JarFile jarFile = new JarFile(lunarFile);
-                        jarFile.stream().forEach(jarEntry -> {
-                            //System.out.println(jarEntry.getName());
-                            if (jarEntry.getName().equals("patch/" + lunar_version_string + "/mappings.txt")) {
-                                System.out.println("found: mappings.txt");
-
-                                try {
-                                    BufferedReader mappingsReader = new BufferedReader(new FileReader(new File("./mappings/" + version + "/" + version + ".srg")));
-                                    String mappingsLine;
-
-                                    String found = "";
-
-                                    while ((mappingsLine = mappingsReader.readLine()) != null) {
-                                        // split on space
-                                        String[] mappingsLineSplit = mappingsLine.split(" ");
-
-                                        if (!mappingsLineSplit[0].contains("CL"))
-                                            continue;
-
-                                        // loop through the jar file and compare mappingsLineSplit[1] to every line in the jar file
-                                        // reset reader to the beginning of the jar file
-
-                                        InputStream input = jarFile.getInputStream(jarEntry);
-                                        BufferedReader jarReader = new BufferedReader(new InputStreamReader(input));
-                                        String jarLine;
-
-                                        while ((jarLine = jarReader.readLine()) != null) {
-                                            String[] splitJarLine = jarLine.split(" ");
-                                            if (splitJarLine[1].equals(mappingsLineSplit[1])) {
-                                                found = "lunar: '" + splitJarLine[0] + "' obf: '" + mappingsLineSplit[1] + "' srg: '" + mappingsLineSplit[2] + "'";
-
-                                                // save the output to output.txt
-                                                try {
-                                                    BufferedWriter outputWriter = new BufferedWriter(new FileWriter(outputFile, true));
-                                                    outputWriter.write(found);
-                                                    outputWriter.newLine();
-                                                    outputWriter.close();
-                                                } catch (IOException e) {
-                                                    e.printStackTrace();
-                                                }
-                                            }
-                                        }
-
-                                        if (found.isEmpty()) {
-                                            try {
-                                                BufferedWriter writer = new BufferedWriter(new FileWriter(errorsFile, true));
-                                                writer.write(mappingsLineSplit[2]);
-                                                writer.newLine();
-                                                writer.close();
-                                            } catch (IOException e) {
-                                                e.printStackTrace();
-                                            }
-
-                                        }
-                                        found = "";
-                                    }
-
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-
-                            }
-                        });
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-                System.out.println("finished deobfoscating classes");
-            });
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        System.out.println("compleate!");
+        System.out.println("complete!");
     }
 }
