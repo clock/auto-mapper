@@ -7,9 +7,6 @@ public class Main {
         String version = "1.8.9";
         String lunar_version_string;
 
-        // if version is 1.8.9, lunar_version_string is v1_8
-        // if version is 1.7.10, lunar_version_string is v1_7
-
         if (version.contains("1.8.9")) {
             lunar_version_string = "v1_8";
         } else if (version.contains("1.7.10")) {
@@ -23,7 +20,6 @@ public class Main {
 
         // check if mappings folder exists in the root of the project
         // if not, create it
-
         File mappingsFolder = new File("mappings/" + version);
         if (!mappingsFolder.exists()) {
             System.out.println("making mappings folder");
@@ -110,11 +106,9 @@ public class Main {
 
         try {
             FileUtil.walk(new File("./input"), "").forEach(lunarFile -> {
+
                 // print out the file name
                 System.out.println("found: " + lunarFile.getName());
-                
-                // if the file name is "lunar-prod" open it as a jar file
-                // print the contents of the jar file
 
                 if (lunarFile.getName().equals("lunar-prod")) {
                     try {
@@ -136,8 +130,6 @@ public class Main {
 
                                         if (!mappingsLineSplit[0].contains("CL"))
                                             continue;
-
-                                        //System.out.println(mappingsLineSplit[1]);
 
                                         // loop through the jar file and compare mappingsLineSplit[1] to every line in the jar file
                                         // reset reader to the beginning of the jar file
