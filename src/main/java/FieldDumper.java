@@ -20,7 +20,7 @@ public class FieldDumper {
                 ClassNode lunarDumpClassNode = new ClassNode();
                 reader.accept(lunarDumpClassNode, 0);
 
-                BufferedReader mappingsReader = new BufferedReader(new FileReader(Main.outputFile));
+                BufferedReader mappingsReader = new BufferedReader(new FileReader(Main.outputClassesFile));
 
                 String line;
 
@@ -86,8 +86,10 @@ public class FieldDumper {
                             break;
                         System.out.println("\t" + mcField[j] + " -> " + lunarField[j]);
 
-                        // add to json file here
-
+                        BufferedWriter outputWriter = new BufferedWriter(new FileWriter(Main.outputFieldsFile, true));
+                        outputWriter.write(originalClassNode.name + ".class: " + mcField[j] + " -> " + lunarField[j]);
+                        outputWriter.newLine();
+                        outputWriter.close();
                     }
                 }
                 else

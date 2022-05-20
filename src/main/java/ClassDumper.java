@@ -47,7 +47,7 @@ public class ClassDumper {
                                                 System.out.println(found);
                                                 // save the output to output.txt
                                                 try {
-                                                    BufferedWriter outputWriter = new BufferedWriter(new FileWriter(Main.outputFile, true));
+                                                    BufferedWriter outputWriter = new BufferedWriter(new FileWriter(Main.outputClassesFile, true));
                                                     outputWriter.write(found);
                                                     outputWriter.newLine();
                                                     outputWriter.close();

@@ -21,7 +21,7 @@ public class MethodDumper {
                 ClassNode lunarDumpClassNode = new ClassNode();
                 reader.accept(lunarDumpClassNode, 0);
 
-                BufferedReader mappingsReader = new BufferedReader(new FileReader(Main.outputFile));
+                BufferedReader mappingsReader = new BufferedReader(new FileReader(Main.outputClassesFile));
 
                 String line;
 
@@ -88,7 +88,10 @@ public class MethodDumper {
                             break;
                         System.out.println("\t" + mcMethod[j] + " -> " + lunarMethod[j]);
 
-                        // output to json file
+                        BufferedWriter outputWriter = new BufferedWriter(new FileWriter(Main.outputMethodsFile, true));
+                        outputWriter.write(originalClassNode.name + ".class " + mcMethod[j] + " -> " + lunarMethod[j]);
+                        outputWriter.newLine();
+                        outputWriter.close();
 
                     }
                 }

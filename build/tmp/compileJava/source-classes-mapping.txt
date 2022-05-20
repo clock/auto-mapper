@@ -4,11 +4,11 @@ util/Helper.java
  util.Helper
 util/FileUtil.java
  util.FileUtil
-FieldDumper.java
- FieldDumper
-ClassDumper.java
- ClassDumper
 Main.java
  Main
 MethodDumper.java
  MethodDumper
+ClassDumper.java
+ ClassDumper
+FieldDumper.java
+ FieldDumper

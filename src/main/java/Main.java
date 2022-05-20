@@ -18,7 +18,9 @@ public class Main {
     public static File netDumpFolder;
     public static File dumpFolder;
     public static File lunarprodFile;
-    public static File outputFile;
+    public static File outputClassesFile;
+    public static File outputFieldsFile;
+    public static File outputMethodsFile;
     public static File errorsFile;
     public static File mcExtracted;
     public static File mcJarFile;
@@ -86,25 +88,62 @@ public class Main {
         System.out.println("downloading new mappings");
         MappingsDownloader.download(version, mappingsFolder);
 
-        // make output.txt file in output folder
-        outputFile = new File("output/" + version + "/output.txt");
-        if (outputFile.exists()) {
-
-            // dont need this rn uncomment later
-
-            /*System.out.println("clearing output.txt");
-            outputFile.delete();
+        // make outputClasses.txt file in output folder
+        outputClassesFile = new File("output/" + version + "/outputClasses.txt");
+        if (outputClassesFile.exists()) {
+            System.out.println("clearing outputClasses");
+            outputClassesFile.delete();
             try {
-                outputFile.createNewFile();
+                outputClassesFile.createNewFile();
             } catch (IOException e) {
                 e.printStackTrace();
-            }*/
+            }
         }
         else
         {
             try {
-                System.out.println("creating output.txt");
-                outputFile.createNewFile();
+                System.out.println("creating outputClasses");
+                outputClassesFile.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        outputFieldsFile = new File("output/" + version + "/outputFields.txt");
+        if (outputFieldsFile.exists()) {
+            System.out.println("clearing outputClasses");
+            outputFieldsFile.delete();
+            try {
+                outputFieldsFile.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else
+        {
+            try {
+                System.out.println("creating outputFields");
+                outputFieldsFile.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        outputMethodsFile = new File("output/" + version + "/outputMethods.txt");
+        if (outputMethodsFile.exists()) {
+            System.out.println("clearing outputClasses");
+            outputMethodsFile.delete();
+            try {
+                outputMethodsFile.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else
+        {
+            try {
+                System.out.println("creating outputMethods");
+                outputMethodsFile.createNewFile();
             } catch (IOException e) {
                 e.printStackTrace();
             }
