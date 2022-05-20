@@ -1,6 +1,5 @@
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.tree.ClassNode;
-import org.objectweb.asm.tree.FieldNode;
 import org.objectweb.asm.tree.MethodNode;
 import util.Helper;
 
@@ -100,6 +99,7 @@ public class MethodDumper {
                 }
             }
         }
+        System.out.println("finished dumping methods");
     }
 
 }

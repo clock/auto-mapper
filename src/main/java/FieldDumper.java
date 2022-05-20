@@ -97,6 +97,7 @@ public class FieldDumper {
                 }
             }
         }
+        System.out.println("\n\nfinished dumping fields\n\n");
     }
 
 }

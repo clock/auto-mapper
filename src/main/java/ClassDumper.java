@@ -44,7 +44,7 @@ public class ClassDumper {
                                             String[] splitJarLine = jarLine.split(" ");
                                             if (splitJarLine[1].equals(mappingsLineSplit[1])) {
                                                 found = "lunar: '" + splitJarLine[0] + "' obf: '" + mappingsLineSplit[1] + "' srg: '" + mappingsLineSplit[2] + "'";
-
+                                                System.out.println(found);
                                                 // save the output to output.txt
                                                 try {
                                                     BufferedWriter outputWriter = new BufferedWriter(new FileWriter(Main.outputFile, true));
