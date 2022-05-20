@@ -166,11 +166,15 @@ public class Main {
             System.exit(-1);
         }
 
-        ClassDumper.dumpClasses();
+        //ClassDumper.dumpClasses();
 
-        Thread.sleep(250);
+        //Thread.sleep(250);
 
-        FieldDumper.dumpFields();
+        //FieldDumper.dumpFields();
+
+        //Thread.sleep(250);
+
+        MethodDumper.dumpMethods();
 
         System.out.println("complete!");
     }

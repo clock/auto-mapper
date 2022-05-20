@@ -1,12 +1,14 @@
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.FieldNode;
+import org.objectweb.asm.tree.MethodNode;
 import util.Helper;
 
 import java.io.*;
 
-public class FieldDumper {
-    public static void dumpFields() throws IOException {
+public class MethodDumper {
+
+    public static void dumpMethods() throws IOException {
         Helper.extractJar(Main.mcJarFile, Main.mcExtracted);
 
         // loop through mcExtracted and print out the names of the files
@@ -64,29 +66,30 @@ public class FieldDumper {
                     ClassNode DumpedClassNode = new ClassNode();
                     dumpedClassReader.accept(DumpedClassNode, 0);
 
-                    String[] mcField = new String[1000];
-                    String[] lunarField = new String[1000];
+                    String[] mcMethod = new String[1000];
+                    String[] lunarMethod = new String[1000];
 
                     int i = 0;
 
-                    for (FieldNode field : originalClassNode.fields){
-                        mcField[i] = field.name;
+                    for (MethodNode method : originalClassNode.methods){
+                        //System.out.println(originalClassNode.name + "/" + method.name + " : " + method.desc);
+                        mcMethod[i] = originalClassNode.name + "/" + method.name + " " + method.desc;
                         i++;
                     }
 
                     i = 0;
 
-                    for (FieldNode field : DumpedClassNode.fields){
-                        lunarField[i] = field.name;
+                    for (MethodNode method : DumpedClassNode.methods){
+                        lunarMethod[i] = DumpedClassNode.name + "/" + method.name;
                         i++;
                     }
 
-                    for (int j = 0; j < mcField.length; j++) {
-                        if (mcField[j] == null)
+                    for (int j = 0; j < mcMethod.length; j++) {
+                        if (mcMethod[j] == null)
                             break;
-                        System.out.println("\t" + mcField[j] + " -> " + lunarField[j]);
+                        System.out.println("\t" + mcMethod[j] + " -> " + lunarMethod[j]);
 
-                        // add to json file here
+                        // output to json file
 
                     }
                 }

@@ -1,12 +1,14 @@
-util/FileUtil.java
- util.FileUtil
-util/Helper.java
- util.Helper
-MappingsDownloader.java
- MappingsDownloader
-ClassDumper.java
- ClassDumper
-Main.java
- Main
 FieldDumper.java
  FieldDumper
+util/Helper.java
+ util.Helper
+ClassDumper.java
+ ClassDumper
+MappingsDownloader.java
+ MappingsDownloader
+util/FileUtil.java
+ util.FileUtil
+Main.java
+ Main
+MethodDumper.java
+ MethodDumper
