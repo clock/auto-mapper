@@ -12,7 +12,7 @@ public class ClassDumper {
                 // print out the file name
                 System.out.println("found: " + lunarFile.getName());
 
-                if (lunarFile.getName().equals("lunar-prod")) {
+                if (lunarFile.getName().equals("lunar-prod-optifine.jar")) {
                     try {
                         JarFile jarFile = new JarFile(lunarFile);
                         jarFile.stream().forEach(jarEntry -> {

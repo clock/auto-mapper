@@ -1,6 +1,4 @@
 import java.io.*;
-import java.util.jar.JarFile;
-import util.FileUtil;
 
 public class Main {
 
@@ -46,20 +44,20 @@ public class Main {
             inputFolder.mkdirs();
         }
 
-        // check if "lunar-prod" file exists in the input folder
+        // check if "lunar-prod-optifine" file exists in the input folder
         // if not tell the user to put it there and exit
-        lunarprodFile = new File("input/" + version + "/lunar-prod");
+        lunarprodFile = new File("input/" + version + "/lunar-prod-optifine.jar");
         if (!lunarprodFile.exists()) {
             System.out.println("input file not found");
-            System.out.println("please put the file lunar-prod in the input folder");
+            System.out.println("please put the file lunar-prod-optifine in the input folder");
             System.exit(0);
         } 
         else
         {
-            System.out.println("lunar-prod file found");
+            System.out.println("lunar-prod-optifine file found");
         }
 
-        // check if mappings folder is empty, if it isnt empty, delete everything in it
+        // check if mappings folder is empty, if it isn't empty, delete everything in it
         if (mappingsFolder.listFiles().length > 0) {
             for (File file : mappingsFolder.listFiles()) {
                 System.out.println("deleted old " + file.getName() + " mapping");
