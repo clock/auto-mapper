@@ -4,9 +4,9 @@ util/Helper.java
  util.Helper
 MappingsDownloader.java
  MappingsDownloader
-FieldDumper.java
- FieldDumper
-Main.java
- Main
 ClassDumper.java
  ClassDumper
+Main.java
+ Main
+FieldDumper.java
+ FieldDumper

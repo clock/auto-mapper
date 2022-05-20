@@ -38,7 +38,7 @@ public class FieldDumper {
                 if (found)
                 {
                     String lunarClassName = line.split("'")[1].split("\\.")[3];
-                    System.out.println("found class " + originalClassFile.getName() + " : " + lunarClassName + ".class");
+                    System.out.println("found class " + originalClassFile.getName() + " : " + lunarClassName + ".class" + " : " + line.split("'")[5]);
 
                     // reading dumped mc classes
 
