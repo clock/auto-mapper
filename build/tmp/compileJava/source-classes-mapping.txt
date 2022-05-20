@@ -1,7 +1,11 @@
 util/FileUtil.java
  util.FileUtil
+util/Helper.java
+ util.Helper
 MappingsDownloader.java
  MappingsDownloader
+FieldDumper.java
+ FieldDumper
 Main.java
  Main
 ClassDumper.java

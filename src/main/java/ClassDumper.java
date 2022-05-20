@@ -81,11 +81,11 @@ public class ClassDumper {
                         e.printStackTrace();
                     }
                 }
-                System.out.println("finished deobfuscation classes");
             });
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        System.out.println("\n\nfinished deobfuscation classes\n\n");
     }
 
 }

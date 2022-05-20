@@ -1,4 +1,12 @@
+import org.objectweb.asm.*;
+import org.objectweb.asm.tree.*;
+import util.Helper;
+
 import java.io.*;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 public class Main {
 
@@ -7,11 +15,15 @@ public class Main {
     public static File mappingsFolder;
     public static File outputFolder;
     public static File inputFolder;
+    public static File netDumpFolder;
+    public static File dumpFolder;
     public static File lunarprodFile;
     public static File outputFile;
     public static File errorsFile;
+    public static File mcExtracted;
+    public static File mcJarFile;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, InterruptedException {
 
         if (version.contains("1.8.9")) {
             lunar_version_string = "v1_8";
@@ -44,6 +56,12 @@ public class Main {
             inputFolder.mkdirs();
         }
 
+        mcExtracted = new File("output/" + version + "/mc");
+        if (!mcExtracted.exists()) {
+            System.out.println("making mc folder");
+            mcExtracted.mkdirs();
+        }
+
         // check if "lunar-prod-optifine" file exists in the input folder
         // if not tell the user to put it there and exit
         lunarprodFile = new File("input/" + version + "/lunar-prod-optifine.jar");
@@ -71,13 +89,16 @@ public class Main {
         // make output.txt file in output folder
         outputFile = new File("output/" + version + "/output.txt");
         if (outputFile.exists()) {
-            System.out.println("clearing output.txt");
+
+            // dont need this rn uncomment later
+
+            /*System.out.println("clearing output.txt");
             outputFile.delete();
             try {
                 outputFile.createNewFile();
             } catch (IOException e) {
                 e.printStackTrace();
-            }
+            }*/
         }
         else
         {
@@ -110,7 +131,46 @@ public class Main {
             }
         }
 
+        if (!Helper.hasMc(version))
+        {
+            System.out.println("please install minecraft version " + version);
+            System.exit(-1);
+        }
+
+        // check if the dump folder exists in the input folder
+        dumpFolder = new File("input/" + version + "/Dump");
+        if (!dumpFolder.exists()) {
+            System.out.println("Dump folder not found");
+            System.out.println("please dump the game and put the dump in the dump folder");
+            System.exit(0);
+        } 
+        else
+        {
+            System.out.println("dump folder found");
+        }
+
+        // check if the dump folder is empty
+        if (dumpFolder.listFiles().length == 0) {
+            System.out.println("dump folder is empty");
+            System.out.println("please dump the game and put the dump in the dump folder");
+            System.exit(0);
+        }
+
+        netDumpFolder = new File("input/" + version + "/Dump/net/minecraft/" + lunar_version_string);
+
+        mcJarFile = new File(Helper.getMinecraftDirectory(), "versions/" + version + "/" + version + ".jar");
+
+        if (!mcJarFile.exists())
+        {
+            System.out.println("could not find " + version + " jar");
+            System.exit(-1);
+        }
+
         ClassDumper.dumpClasses();
+
+        Thread.sleep(250);
+
+        FieldDumper.dumpFields();
 
         System.out.println("complete!");
     }
