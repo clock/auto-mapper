@@ -7,6 +7,14 @@ import java.io.*;
 
 public class FieldDumper {
     public static void dumpFields() throws IOException {
+
+        System.out.println("dumping fields");
+        try {
+            Thread.sleep(150);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         Helper.extractJar(Main.mcJarFile, Main.mcExtracted);
 
         // loop through mcExtracted and print out the names of the files
@@ -29,7 +37,7 @@ public class FieldDumper {
                 while ((line = mappingsReader.readLine()) != null)
                 {
                     //System.out.println(line.split("'")[3] + ".class");
-                    if (originalClassFile.getName().equals(line.split("'")[3] + ".class"))
+                    if (originalClassFile.getName().equals(line.split(" ")[0] + ".class"))
                     {
                         found = true;
                         break;
@@ -37,8 +45,8 @@ public class FieldDumper {
                 }
                 if (found)
                 {
-                    String lunarClassName = line.split("'")[1].split("\\.")[3];
-                    System.out.println("found class " + originalClassFile.getName() + " : " + lunarClassName + ".class" + " : " + line.split("'")[5]);
+                    String lunarClassName = line.split(" ")[1].split("\\.")[3];
+                    System.out.println("found class " + originalClassFile.getName() + " : " + lunarClassName + ".class" + " : " + line.split(" ")[2]);
 
                     // reading dumped mc classes
 
@@ -84,12 +92,32 @@ public class FieldDumper {
                     for (int j = 0; j < mcField.length; j++) {
                         if (mcField[j] == null)
                             break;
-                        System.out.println("\t" + mcField[j] + " -> " + lunarField[j]);
 
-                        BufferedWriter outputWriter = new BufferedWriter(new FileWriter(Main.outputFieldsFile, true));
-                        outputWriter.write(originalClassNode.name + ".class: " + mcField[j] + " -> " + lunarField[j]);
-                        outputWriter.newLine();
-                        outputWriter.close();
+                        BufferedReader srgReader = new BufferedReader(new FileReader(new File("./mappings/" + Main.version + "/" + Main.version + ".srg")));
+
+                        String buffer;
+
+                        while ((buffer = srgReader.readLine()) != null) {
+
+                            String[] mappingsLineSplit = buffer.split(" ");
+
+                            if (!mappingsLineSplit[0].contains("FD"))
+                                continue;
+
+                            if (!mappingsLineSplit[2].contains("field"))
+                                continue;
+
+                            if (mappingsLineSplit[1].equals(originalClassNode.name + "/" + mcField[j])) {
+                                System.out.println("\t" + mcField[j] + " -> " + lunarField[j]);
+
+                                BufferedWriter outputWriter = new BufferedWriter(new FileWriter(Main.outputFieldsFile, true));
+                                outputWriter.write(originalClassNode.name + "/" + mcField[j] + " " + DumpedClassNode.name + "/" + lunarField[j] + " " + mappingsLineSplit[2]);
+                                outputWriter.newLine();
+                                outputWriter.close();
+
+                                break;
+                            }
+                        }
                     }
                 }
                 else
@@ -99,7 +127,7 @@ public class FieldDumper {
                 }
             }
         }
-        System.out.println("\n\nfinished dumping fields\n\n");
+        System.out.println("finished dumping fields");
     }
 
 }

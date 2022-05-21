@@ -8,7 +8,13 @@ import java.io.*;
 public class MethodDumper {
 
     public static void dumpMethods() throws IOException {
-        Helper.extractJar(Main.mcJarFile, Main.mcExtracted);
+
+        System.out.println("dumping methods");
+        try {
+            Thread.sleep(150);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         // loop through mcExtracted and print out the names of the files
         for (File originalClassFile : Main.mcExtracted.listFiles()) {
@@ -30,7 +36,7 @@ public class MethodDumper {
                 while ((line = mappingsReader.readLine()) != null)
                 {
                     //System.out.println(line.split("'")[3] + ".class");
-                    if (originalClassFile.getName().equals(line.split("'")[3] + ".class"))
+                    if (originalClassFile.getName().equals(line.split(" ")[0] + ".class"))
                     {
                         found = true;
                         break;
@@ -38,8 +44,8 @@ public class MethodDumper {
                 }
                 if (found)
                 {
-                    String lunarClassName = line.split("'")[1].split("\\.")[3];
-                    System.out.println("found class " + originalClassFile.getName() + " : " + lunarClassName + ".class" + " : " + line.split("'")[5]);
+                    String lunarClassName = line.split(" ")[1].split("\\.")[3];
+                    //System.out.println("found class " + originalClassFile.getName() + " : " + lunarClassName + ".class" + " : " + line.split("'")[5]);
 
                     // reading dumped mc classes
 
@@ -86,13 +92,30 @@ public class MethodDumper {
                     for (int j = 0; j < mcMethod.length; j++) {
                         if (mcMethod[j] == null)
                             break;
-                        System.out.println("\t" + mcMethod[j] + " -> " + lunarMethod[j]);
 
-                        BufferedWriter outputWriter = new BufferedWriter(new FileWriter(Main.outputMethodsFile, true));
-                        outputWriter.write(originalClassNode.name + ".class " + mcMethod[j] + " -> " + lunarMethod[j]);
-                        outputWriter.newLine();
-                        outputWriter.close();
+                        BufferedReader srgReader = new BufferedReader(new FileReader(new File("./mappings/" + Main.version + "/" + Main.version + ".srg")));
 
+                        String buffer;
+
+                        while ((buffer = srgReader.readLine()) != null) {
+
+                            String[] mappingsLineSplit = buffer.split(" ");
+
+                            if (!mappingsLineSplit[0].contains("MD"))
+                                continue;
+
+                            if (mcMethod[j].equals(mappingsLineSplit[1] + " " + mappingsLineSplit[2]))
+                            {
+                                System.out.println("\t" + mcMethod[j] + " -> " + lunarMethod[j]);
+
+                                BufferedWriter outputWriter = new BufferedWriter(new FileWriter(Main.outputMethodsFile, true));
+                                outputWriter.write(mcMethod[j] + " " + lunarMethod[j] + " " + mappingsLineSplit[3] + " " + mappingsLineSplit[4]);
+                                outputWriter.newLine();
+                                outputWriter.close();
+
+                                break;
+                            }
+                        }
                     }
                 }
                 else

@@ -21,9 +21,11 @@ public class Main {
     public static File outputClassesFile;
     public static File outputFieldsFile;
     public static File outputMethodsFile;
+    public static File methodsCsv;
     public static File errorsFile;
     public static File mcExtracted;
     public static File mcJarFile;
+    public static File finalJsonFile;
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
@@ -71,9 +73,7 @@ public class Main {
             System.out.println("input file not found");
             System.out.println("please put the file lunar-prod-optifine in the input folder");
             System.exit(0);
-        } 
-        else
-        {
+        } else {
             System.out.println("lunar-prod-optifine file found");
         }
 
@@ -81,7 +81,7 @@ public class Main {
         if (mappingsFolder.listFiles().length > 0) {
             for (File file : mappingsFolder.listFiles()) {
                 System.out.println("deleted old " + file.getName() + " mapping");
-                file.delete();
+                //file.delete();
             }
         }
 
@@ -92,15 +92,13 @@ public class Main {
         outputClassesFile = new File("output/" + version + "/outputClasses.txt");
         if (outputClassesFile.exists()) {
             System.out.println("clearing outputClasses");
-            outputClassesFile.delete();
+            //outputClassesFile.delete();
             try {
                 outputClassesFile.createNewFile();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-        else
-        {
+        } else {
             try {
                 System.out.println("creating outputClasses");
                 outputClassesFile.createNewFile();
@@ -112,15 +110,13 @@ public class Main {
         outputFieldsFile = new File("output/" + version + "/outputFields.txt");
         if (outputFieldsFile.exists()) {
             System.out.println("clearing outputClasses");
-            outputFieldsFile.delete();
+            //outputFieldsFile.delete();
             try {
                 outputFieldsFile.createNewFile();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-        else
-        {
+        } else {
             try {
                 System.out.println("creating outputFields");
                 outputFieldsFile.createNewFile();
@@ -129,18 +125,34 @@ public class Main {
             }
         }
 
+        finalJsonFile = new File("output/" + version + "/final.json");
+        if (finalJsonFile.exists()) {
+            System.out.println("clearing final json");
+            //finalJsonFile.delete();
+            try {
+                finalJsonFile.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                System.out.println("creating final json");
+                finalJsonFile.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
         outputMethodsFile = new File("output/" + version + "/outputMethods.txt");
         if (outputMethodsFile.exists()) {
             System.out.println("clearing outputClasses");
-            outputMethodsFile.delete();
+            //outputMethodsFile.delete();
             try {
                 outputMethodsFile.createNewFile();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-        else
-        {
+        } else {
             try {
                 System.out.println("creating outputMethods");
                 outputMethodsFile.createNewFile();
@@ -153,15 +165,13 @@ public class Main {
         errorsFile = new File("output/" + version + "/errors.txt");
         if (errorsFile.exists()) {
             System.out.println("clearing errors.txt");
-            errorsFile.delete();
+            //errorsFile.delete();
             try {
                 errorsFile.createNewFile();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-        else
-        {
+        } else {
             try {
                 System.out.println("creating errors.txt");
                 errorsFile.createNewFile();
@@ -170,8 +180,7 @@ public class Main {
             }
         }
 
-        if (!Helper.hasMc(version))
-        {
+        if (!Helper.hasMc(version)) {
             System.out.println("please install minecraft version " + version);
             System.exit(-1);
         }
@@ -182,9 +191,7 @@ public class Main {
             System.out.println("Dump folder not found");
             System.out.println("please dump the game and put the dump in the dump folder");
             System.exit(0);
-        } 
-        else
-        {
+        } else {
             System.out.println("dump folder found");
         }
 
@@ -199,17 +206,18 @@ public class Main {
 
         mcJarFile = new File(Helper.getMinecraftDirectory(), "versions/" + version + "/" + version + ".jar");
 
-        if (!mcJarFile.exists())
-        {
+        if (!mcJarFile.exists()) {
             System.out.println("could not find " + version + " jar");
             System.exit(-1);
         }
 
-        ClassDumper.dumpClasses();
+        //ClassDumper.dumpClasses();
 
-        FieldDumper.dumpFields();
+        //FieldDumper.dumpFields();
 
-        MethodDumper.dumpMethods();
+        //MethodDumper.dumpMethods();
+
+        CreateLunarMappings.createMappings();
 
         System.out.println("complete!");
     }

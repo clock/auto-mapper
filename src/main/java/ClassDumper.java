@@ -6,6 +6,12 @@ import java.util.jar.JarFile;
 public class ClassDumper {
     public static void dumpClasses()
     {
+        System.out.println("dumping classes");
+        try {
+            Thread.sleep(150);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         try {
             FileUtil.walk(new File("./input"), "").forEach(lunarFile -> {
 
@@ -43,8 +49,9 @@ public class ClassDumper {
                                         while ((jarLine = jarReader.readLine()) != null) {
                                             String[] splitJarLine = jarLine.split(" ");
                                             if (splitJarLine[1].equals(mappingsLineSplit[1])) {
-                                                found = "lunar: '" + splitJarLine[0] + "' obf: '" + mappingsLineSplit[1] + "' srg: '" + mappingsLineSplit[2] + "'";
-                                                System.out.println(found);
+                                                System.out.println("\t" + mappingsLineSplit[1] + "->" + splitJarLine[0]);
+                                                found = mappingsLineSplit[1] + " " + splitJarLine[0] + " " + mappingsLineSplit[2];
+                                                //System.out.println(found);
                                                 // save the output to output.txt
                                                 try {
                                                     BufferedWriter outputWriter = new BufferedWriter(new FileWriter(Main.outputClassesFile, true));
@@ -85,7 +92,7 @@ public class ClassDumper {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        System.out.println("\n\nfinished deobfuscation classes\n\n");
+        System.out.println("finished deobfuscation classes");
     }
 
 }
