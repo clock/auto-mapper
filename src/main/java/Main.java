@@ -21,7 +21,6 @@ public class Main {
     public static File outputClassesFile;
     public static File outputFieldsFile;
     public static File outputMethodsFile;
-    public static File methodsCsv;
     public static File errorsFile;
     public static File mcExtracted;
     public static File mcJarFile;
@@ -211,11 +210,11 @@ public class Main {
             System.exit(-1);
         }
 
-        //ClassDumper.dumpClasses();
+        ClassDumper.dumpClasses();
 
-        //FieldDumper.dumpFields();
+        FieldDumper.dumpFields();
 
-        //MethodDumper.dumpMethods();
+        MethodDumper.dumpMethods();
 
         CreateLunarMappings.createMappings();
 

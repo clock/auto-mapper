@@ -1,17 +1,17 @@
-MappingsDownloader.java
- MappingsDownloader
 util/FileUtil.java
  util.FileUtil
+MappingsDownloader.java
+ MappingsDownloader
 util/Helper.java
  util.Helper
-FieldDumper.java
- FieldDumper
+Main.java
+ Main
 MethodDumper.java
  MethodDumper
 ClassDumper.java
  ClassDumper
-Main.java
- Main
+FieldDumper.java
+ FieldDumper
 CreateLunarMappings.java
  CreateLunarMappings
  fieldsBase
