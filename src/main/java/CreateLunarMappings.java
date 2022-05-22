@@ -95,7 +95,7 @@ public class CreateLunarMappings {
 
                 fieldBuffer.lunarName = lunarFieldSplit[lunarFieldSplit.length - 1];
                 fieldBuffer.obfName = obfSplit[1];
-                fieldBuffer.srgName = srgFieldSplit[lunarFieldSplit.length - 1];
+                fieldBuffer.srgName = srgFieldSplit[srgFieldSplit.length - 1];
 
                 // loop through fields csv and find srg name of field, extract the mcp name (for a.class the first field is w, the value of w is value
 

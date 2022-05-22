@@ -80,7 +80,7 @@ public class Main {
         if (mappingsFolder.listFiles().length > 0) {
             for (File file : mappingsFolder.listFiles()) {
                 System.out.println("deleted old " + file.getName() + " mapping");
-                //file.delete();
+                file.delete();
             }
         }
 
@@ -91,7 +91,7 @@ public class Main {
         outputClassesFile = new File("output/" + version + "/outputClasses.txt");
         if (outputClassesFile.exists()) {
             System.out.println("clearing outputClasses");
-            //outputClassesFile.delete();
+            outputClassesFile.delete();
             try {
                 outputClassesFile.createNewFile();
             } catch (IOException e) {
@@ -109,7 +109,7 @@ public class Main {
         outputFieldsFile = new File("output/" + version + "/outputFields.txt");
         if (outputFieldsFile.exists()) {
             System.out.println("clearing outputClasses");
-            //outputFieldsFile.delete();
+            outputFieldsFile.delete();
             try {
                 outputFieldsFile.createNewFile();
             } catch (IOException e) {
@@ -127,7 +127,7 @@ public class Main {
         finalJsonFile = new File("output/" + version + "/final.json");
         if (finalJsonFile.exists()) {
             System.out.println("clearing final json");
-            //finalJsonFile.delete();
+            finalJsonFile.delete();
             try {
                 finalJsonFile.createNewFile();
             } catch (IOException e) {
@@ -145,7 +145,7 @@ public class Main {
         outputMethodsFile = new File("output/" + version + "/outputMethods.txt");
         if (outputMethodsFile.exists()) {
             System.out.println("clearing outputClasses");
-            //outputMethodsFile.delete();
+            outputMethodsFile.delete();
             try {
                 outputMethodsFile.createNewFile();
             } catch (IOException e) {
@@ -164,7 +164,7 @@ public class Main {
         errorsFile = new File("output/" + version + "/errors.txt");
         if (errorsFile.exists()) {
             System.out.println("clearing errors.txt");
-            //errorsFile.delete();
+            errorsFile.delete();
             try {
                 errorsFile.createNewFile();
             } catch (IOException e) {
